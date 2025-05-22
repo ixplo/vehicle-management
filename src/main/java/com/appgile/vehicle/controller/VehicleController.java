@@ -1,0 +1,67 @@
+package com.appgile.vehicle.controller;
+
+import com.appgile.vehicle.model.Vehicle;
+import com.appgile.vehicle.service.VehicleService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
+
+@Slf4j
+@RestController
+@RequestMapping("/api/v1/vehicles")
+public class VehicleController {
+
+    private final VehicleService service;
+
+    public VehicleController(VehicleService service) {
+        this.service = service;
+    }
+
+    @PostMapping
+    public Vehicle create(@RequestBody Vehicle vehicle) {
+        Vehicle result = service.create(vehicle);
+        log.info("Creating vehicle: {}", vehicle);
+        return result;
+    }
+
+    @GetMapping
+    public Page<Vehicle> list(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Page<Vehicle> result = service.list(PageRequest.of(page, size));
+        log.info("Listing vehicles - page: {}, size: {}", page, size);
+        return result;
+    }
+
+    @GetMapping("/{id}")
+    public Vehicle get(@PathVariable UUID id) {
+        Vehicle result = service.getById(id);
+        log.info("Getting vehicle with ID: {}", id);
+        return result;
+    }
+
+    @PutMapping("/{id}")
+    public Vehicle update(@PathVariable UUID id, @RequestBody Vehicle vehicle) {
+        Vehicle result = service.update(id, vehicle);
+        log.info("Updating vehicle with ID: {} with data: {}", id, vehicle);
+        return result;
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable UUID id, @RequestParam String deletedBy) {
+        log.info("Deleting vehicle with ID: {} by user: {}", id, deletedBy);
+        service.delete(id, deletedBy);
+    }
+}
