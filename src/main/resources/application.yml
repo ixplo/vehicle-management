@@ -16,8 +16,21 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
+info:
+  build:
+    time: "@buildTime@"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info
+  endpoint:
+    info:
+      access: read_only
 logging:
   file:
     name: logs/app.log
   level:
     root: INFO
+    org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer: ERROR
+    org.springframework.security: DEBUG

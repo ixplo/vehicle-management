@@ -1,20 +1,50 @@
-// service/VehicleService.java
 package com.appgile.vehicle.service;
 
 import com.appgile.vehicle.model.Vehicle;
+import com.appgile.vehicle.repository.VehicleRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
-public interface VehicleService {
-    Vehicle create(Vehicle vehicle);
+@Service
+public class VehicleService {
+    
+    private final VehicleRepository repo;
 
-    Vehicle getById(UUID id);
+    public VehicleService(VehicleRepository repo) {
+        this.repo = repo;
+    }
 
-    Page<Vehicle> list(Pageable pageable);
+    public Vehicle create(Vehicle vehicle) {
+        return repo.save(vehicle);
+    }
 
-    Vehicle update(UUID id, Vehicle vehicle);
+    public Vehicle getById(UUID id) {
+        return repo.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
 
-    void delete(UUID id, String deletedBy);
+    public Page<Vehicle> list(Pageable pageable) {
+        return repo.findAll(pageable);
+    }
+
+    public Vehicle update(UUID id, Vehicle vehicle) {
+        Vehicle existing = getById(id);
+        vehicle.setVehicleId(id);
+        vehicle.setCreatedAt(existing.getCreatedAt());
+        vehicle.setCreatedBy(existing.getCreatedBy());
+        vehicle.setUpdatedAt(OffsetDateTime.now());
+        return repo.save(vehicle);
+    }
+
+    public void delete(UUID id, String deletedBy) {
+        Vehicle vehicle = getById(id);
+        vehicle.setIsActive(false);
+        vehicle.setUpdatedBy(deletedBy);
+        vehicle.setUpdatedAt(OffsetDateTime.now());
+        repo.save(vehicle);
+    }
 }
