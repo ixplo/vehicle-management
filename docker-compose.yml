@@ -1,4 +1,4 @@
-version: "1.0"
+version: "1.1"
 
 services:
   db:
@@ -12,13 +12,13 @@ services:
       - db-data:/var/lib/postgresql/data
     ports:
       - '45432:5432'
-
-  app:
+      
+  backend:
     build:
-      context: .
+      context: ./backend
       dockerfile: Dockerfile
     image: vehicle-management:latest
-    container_name: vehicle-app
+    container_name: vehicle-backend
     depends_on:
       - db
     environment:
@@ -27,7 +27,19 @@ services:
       DB_PASS: password
     ports:
       - "8088:8088"
-
+    restart: unless-stopped
+  
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vehicle-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    
 volumes:
   db-data:
     driver: local
