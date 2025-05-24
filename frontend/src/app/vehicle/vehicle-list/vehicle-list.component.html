@@ -11,14 +11,14 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let v of vehicles">
-      <td>{{ v.make }}</td>
-      <td>{{ v.model }}</td>
-      <td>{{ v.year }}</td>
-      <td>{{ v.price }}</td>
+    <tr *ngFor="let vehicle of vehicles">
+      <td>{{ vehicle.make }}</td>
+      <td>{{ vehicle.model }}</td>
+      <td>{{ vehicle.year }}</td>
+      <td>{{ vehicle.price }}</td>
       <td>
-        <button class="btn btn-sm btn-primary" routerLink="/vehicles/edit/{{v.id}}">Edit</button>
-        <button class="btn btn-sm btn-primary" (click)="delete(v.id!)">Delete</button>
+        <button class="btn btn-sm btn-primary" routerLink="/vehicles/edit/{{vehicle.id}}">Edit</button>
+        <button class="btn btn-sm btn-primary" (click)="delete(vehicle.id!)">Delete</button>
       </td>
     </tr>
   </tbody>
@@ -27,5 +27,4 @@
 <button class="btn btn-sm btn-secondary" (click)="prev()" [disabled]="page === 0">Prev</button>
 <span class="badge bg-info">PageModel {{ page + 1 }} of {{ totalPages }}</span>
 <button class="btn btn-sm btn-secondary" (click)="next()" [disabled]="page + 1 >= totalPages">Next</button>
-
 <button class="btn btn-sm btn-secondary" routerLink="/vehicles/new">New VehicleModel</button>

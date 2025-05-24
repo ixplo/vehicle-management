@@ -12,7 +12,7 @@ export class NavbarComponent {
     constructor(public auth: AuthService, private router: Router) {}
 
     isLoggedIn(): boolean {
-        return !!localStorage.getItem('token');
+        return this.auth.isLoggedIn();
     }
     
     logout() {

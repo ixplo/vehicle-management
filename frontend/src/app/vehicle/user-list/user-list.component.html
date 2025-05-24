@@ -9,12 +9,12 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let u of users">
-      <td>{{ u.username }}</td>
-      <td>{{ u.role }}</td>
+    <tr *ngFor="let user of users">
+      <td>{{ user.username }}</td>
+      <td>{{ user.role }}</td>
       <td>
-        <button class="btn btn-sm btn-primary" routerLink="/users/edit/{{u.id}}">Edit</button>
-        <button class="btn btn-sm btn-primary" (click)="delete(u.id)">Delete</button>
+        <button class="btn btn-sm btn-primary" routerLink="/users/edit/{{user.id}}">Edit</button>
+        <button class="btn btn-sm btn-primary" (click)="delete(user.id)">Delete</button>
       </td>
     </tr>
   </tbody>
