@@ -1,0 +1,31 @@
+<h2>{{ isEdit ? 'Edit' : 'New' }} User</h2>
+
+<form (ngSubmit)="save()" class="form-container">
+  <div class="form-field">
+    <label for="username">Username:</label>
+    <input id="username" [(ngModel)]="user.username" name="username" required />
+  </div>
+
+  <div class="form-field">
+    <label for="email">Email:</label>
+    <input id="email" [(ngModel)]="user.email" name="email" required />
+  </div>
+
+  <div class="form-field">
+    <label for="password">Password:</label>
+    <input id="password" type="password" [(ngModel)]="user.password" name="password" required />
+  </div>
+
+  <div class="form-field">
+    <label for="role">Role:</label>
+    <select id="role" [(ngModel)]="user.role" name="role" required>
+      <option value="Admin">Admin</option>
+      <option value="User">User</option>
+    </select>
+  </div>
+
+  <div class="form-buttons">
+    <button type="button" (click)="cancel()">Cancel</button>
+    <button type="submit" class="highlighted-button">{{ isEdit ? 'Save' : 'Create' }}</button>
+  </div>
+</form>
