@@ -1,6 +1,10 @@
 package com.appgile.vehicle.service;
 
+import com.appgile.vehicle.model.Make;
+import com.appgile.vehicle.model.Model;
 import com.appgile.vehicle.model.Vehicle;
+import com.appgile.vehicle.repository.MakeRepository;
+import com.appgile.vehicle.repository.ModelRepository;
 import com.appgile.vehicle.repository.VehicleRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
@@ -13,22 +17,42 @@ import java.util.UUID;
 @Service
 public class VehicleService {
     
-    private final VehicleRepository repo;
+    private final VehicleRepository vehicleRepository;
+    private final MakeRepository makeRepository;
+    private final ModelRepository modelRepository;
 
-    public VehicleService(VehicleRepository repo) {
-        this.repo = repo;
+    public VehicleService(VehicleRepository vehicleRepository, 
+                          MakeRepository makeRepository, 
+                          ModelRepository modelRepository) {
+        this.vehicleRepository = vehicleRepository;
+        this.makeRepository = makeRepository;
+        this.modelRepository = modelRepository;
     }
 
-    public Vehicle create(Vehicle vehicle) {
-        return repo.save(vehicle);
+    public Vehicle create(Vehicle vehicle, String createdBy) {
+        Make make = vehicle.getMake();
+        if (!makeRepository.existsById(make.getMakeId())) {
+            makeRepository.save(make);
+        }
+        Model model = vehicle.getModel();
+        if (!modelRepository.existsById(model.getModelId())) {
+            model.setMake(make);
+            modelRepository.save(model);
+        }
+
+        vehicle.setCreatedAt(OffsetDateTime.now());
+        vehicle.setCreatedBy(createdBy);
+        vehicle.setIsActive(true);
+
+        return vehicleRepository.save(vehicle);
     }
 
     public Vehicle getById(UUID id) {
-        return repo.findById(id).orElseThrow(EntityNotFoundException::new);
+        return vehicleRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     public Page<Vehicle> list(Pageable pageable) {
-        return repo.findAll(pageable);
+        return vehicleRepository.findAll(pageable);
     }
 
     public Vehicle update(UUID id, Vehicle vehicle) {
@@ -37,7 +61,7 @@ public class VehicleService {
         vehicle.setCreatedAt(existing.getCreatedAt());
         vehicle.setCreatedBy(existing.getCreatedBy());
         vehicle.setUpdatedAt(OffsetDateTime.now());
-        return repo.save(vehicle);
+        return vehicleRepository.save(vehicle);
     }
 
     public void delete(UUID id, String deletedBy) {
@@ -45,6 +69,6 @@ public class VehicleService {
         vehicle.setIsActive(false);
         vehicle.setUpdatedBy(deletedBy);
         vehicle.setUpdatedAt(OffsetDateTime.now());
-        repo.save(vehicle);
+        vehicleRepository.save(vehicle);
     }
 }

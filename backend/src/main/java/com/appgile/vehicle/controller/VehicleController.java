@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Slf4j
 @RestController
@@ -30,7 +31,8 @@ public class VehicleController {
 
     @PostMapping
     public Vehicle create(@RequestBody Vehicle vehicle) {
-        Vehicle result = service.create(vehicle);
+        String createdBy = getCurrentUser();
+        Vehicle result = service.create(vehicle, createdBy);
         log.info("Creating vehicle: {}", vehicle);
         return result;
     }
@@ -63,5 +65,9 @@ public class VehicleController {
     public void delete(@PathVariable UUID id, @RequestParam String deletedBy) {
         log.info("Deleting vehicle with ID: {} by user: {}", id, deletedBy);
         service.delete(id, deletedBy);
+    }
+
+    private String getCurrentUser() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }
