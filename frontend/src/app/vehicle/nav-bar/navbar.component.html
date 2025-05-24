@@ -1,0 +1,12 @@
+<nav class="container flex">
+  <a routerLink="/vehicles" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">List Vehicles</a>
+  <a routerLink="/vehicles/new" class="nav-link" routerLinkActive="active">Add Vehicle</a>
+  <a routerLink="/users" class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">List Users</a>
+  <a routerLink="/users/new" class="nav-link" routerLinkActive="active">Add User</a>
+  <ng-container *ngIf="!isLoggedIn()">
+    <a routerLink="/login" class="nav-link" routerLinkActive="active">Login</a>
+  </ng-container>
+  <ng-container *ngIf="isLoggedIn()">
+    <a href="#" (click)="logout()" class="nav-link">Logout</a>
+  </ng-container>
+</nav>
