@@ -1,5 +1,7 @@
 package com.appgile.vehicle.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,4 +22,16 @@ public class Make {
 
     @Column(nullable = false, length = 100)
     private String name;
+
+    @JsonCreator
+    public static Make fromString(String name) {
+        Make make = new Make();
+        make.setName(name);
+        return make;
+    }
+
+    @JsonValue
+    public String getName() {
+        return name;
+    }
 }

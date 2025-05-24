@@ -1,5 +1,8 @@
 package com.appgile.vehicle.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -24,4 +27,16 @@ public class Model {
     private Make make;
 
     private String name;
+
+    @JsonCreator
+    public static Model fromString(String name) {
+        Model model = new Model();
+        model.setName(name);
+        return model;
+    }
+
+    @JsonValue
+    public String getName() {
+        return name;
+    }
 }
