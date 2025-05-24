@@ -6,10 +6,11 @@ import { Vehicle } from '../model/vehicle';
 @Component({
   selector: 'app-vehicle-form',
   standalone: false,
-  templateUrl: './vehicle-form.component.html'
+  templateUrl: './vehicle-form.component.html',
+  styleUrls: ['vehicle-form.component.scss']
 })
 export class VehicleFormComponent implements OnInit {
-  vehicle: Vehicle = { make: '', model: '', year: new Date().getFullYear() };
+  vehicle: Vehicle = { make: '', model: '', year: new Date().getFullYear(), price: 0 };
   isEdit = false;
 
   constructor(
@@ -32,5 +33,9 @@ export class VehicleFormComponent implements OnInit {
       : this.vehicleService.create(this.vehicle);
 
     op.subscribe(() => this.router.navigate(['/vehicles']));
+  }
+
+  cancel() {
+    this.router.navigate(['/vehicles']);
   }
 }

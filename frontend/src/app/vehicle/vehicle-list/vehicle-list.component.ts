@@ -6,6 +6,7 @@ import { Vehicle } from '../model/vehicle';
   selector: 'app-vehicle-list',
   standalone: false,
   templateUrl: './vehicle-list.component.html',
+  styleUrls: ['vehicle-list.component.scss']
 })
 export class VehicleListComponent implements OnInit {
   vehicles: Vehicle[] = [];
