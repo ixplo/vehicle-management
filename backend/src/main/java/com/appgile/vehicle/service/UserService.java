@@ -2,6 +2,7 @@ package com.appgile.vehicle.service;
 
 import com.appgile.vehicle.model.User;
 import com.appgile.vehicle.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +12,11 @@ import java.util.UUID;
 public class UserService {
 
     private final UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
+    private final PasswordEncoder passwordEncoder;
+    
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<User> getAllUsers() {
@@ -21,6 +24,8 @@ public class UserService {
     }
 
     public User create(User user) {
+        String rawPassword = user.getPassword();
+        user.setPassword(passwordEncoder.encode(rawPassword));
         return userRepository.save(user);
     }
 
@@ -36,6 +41,7 @@ public class UserService {
                 .map(user -> {
                     user.setUsername(updatedUser.getUsername());
                     user.setPassword(updatedUser.getPassword());
+                    user.setEmail(updatedUser.getEmail());
                     user.setRole(updatedUser.getRole());
                     user.setActive(updatedUser.isActive());
                     user.setUpdatedAt(updatedUser.getUpdatedAt());
