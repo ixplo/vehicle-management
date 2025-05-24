@@ -10,7 +10,7 @@ import { User } from '../model/user';
     styleUrls: ['user-form.component.scss']
 })
 export class UserFormComponent implements OnInit {
-    user: User = { username: '', email: '', role: 'User', password: '' };
+    user: User = { username: '', email: '', role: 'User', password: '', active: 'true' };
     isEdit = false;
 
     constructor(
