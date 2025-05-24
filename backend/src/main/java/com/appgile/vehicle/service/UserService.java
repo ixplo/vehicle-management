@@ -5,6 +5,7 @@ import com.appgile.vehicle.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,6 +27,8 @@ public class UserService {
     public User create(User user) {
         String rawPassword = user.getPassword();
         user.setPassword(passwordEncoder.encode(rawPassword));
+        user.setCreatedAt(LocalDateTime.now());
+        user.setUpdatedAt(LocalDateTime.now());
         return userRepository.save(user);
     }
 
