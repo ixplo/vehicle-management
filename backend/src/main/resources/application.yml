@@ -6,7 +6,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/vehicle_db}
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/vehicle-db}
     username: ${DB_USER:postgres}
     password: ${DB_PASS:password}
   jpa:

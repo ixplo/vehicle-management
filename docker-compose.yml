@@ -6,7 +6,7 @@ services:
     container_name: vehicle_db
     restart: always
     environment:
-      POSTGRES_DB: vehicle_db
+      POSTGRES_DB: vehicle-db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     volumes:
