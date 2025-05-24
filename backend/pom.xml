@@ -11,8 +11,8 @@
     <groupId>com.appgile</groupId>
     <artifactId>vehicle-management</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Vehicle Management</name>
-    <description>Vehicle Management API</description>
+    <name>VehicleModel Management</name>
+    <description>VehicleModel Management API</description>
     <url/>
     <licenses>
         <license/>
