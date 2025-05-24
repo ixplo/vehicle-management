@@ -1,0 +1,29 @@
+<h2>{{ isEdit ? 'Edit' : 'New' }} VehicleModel</h2>
+
+<form (ngSubmit)="save()">
+  <label>
+    Make:
+    <input [(ngModel)]="vehicle.make" name="make" required />
+  </label>
+  <br />
+  <label>
+    Model:
+    <input [(ngModel)]="vehicle.model" name="model" required />
+  </label>
+  <br />
+  <label>
+    Year:
+    <input
+            type="number"
+            [(ngModel)]="vehicle.year"
+            name="year"
+            required
+            min="1900"
+    />
+  </label>
+  <br />
+  <button type="submit">{{ isEdit ? 'Update' : 'Create' }}</button>
+  <button type="button" (click)="router.navigate(['/vehicles'])">
+    Cancel
+  </button>
+</form>

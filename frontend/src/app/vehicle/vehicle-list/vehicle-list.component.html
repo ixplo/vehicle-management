@@ -1,0 +1,29 @@
+<h2>Vehicles</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Make</th>
+      <th>Model</th>
+      <th>Year</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let v of vehicles">
+      <td>{{ v.make }}</td>
+      <td>{{ v.model }}</td>
+      <td>{{ v.year }}</td>
+      <td>
+        <button routerLink="/vehicles/edit/{{v.id}}">Edit</button>
+        <button (click)="delete(v.id!)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<button (click)="prev()" [disabled]="page === 0">Prev</button>
+<span>PageModel {{ page + 1 }} of {{ totalPages }}</span>
+<button (click)="next()" [disabled]="page + 1 >= totalPages">Next</button>
+
+<button routerLink="/vehicles/new">New VehicleModel</button>
