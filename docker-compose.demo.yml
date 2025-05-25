@@ -34,13 +34,13 @@ services:
     networks:
       - appnet
   
-  frontend:
+  portal:
     build:
-      context: ./frontend
+      context: ./portal
       dockerfile: Dockerfile
       args:
         NGINX_CONF: nginx.demo.conf
-    container_name: vehicle-frontend
+    container_name: vehicle-portal
     ports:
       - "80:80"
     depends_on:

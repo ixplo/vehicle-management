@@ -10,6 +10,6 @@ RUN npm run build:prod
 FROM nginx:alpine
 ARG NGINX_CONF=nginx.conf
 COPY ${NGINX_CONF} /etc/nginx/conf.d/default.conf
-COPY --from=builder /app/dist/frontend /usr/share/nginx/html
+COPY --from=builder /app/dist/portal /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx","-g","daemon off;"]
