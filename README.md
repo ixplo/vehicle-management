@@ -1,4 +1,123 @@
-# Getting Started
+# Vehicle Management Application
+
+This project combines a **Spring Boot** backend with an **Angular** portal. It uses **Docker** and **Docker Compose** for simplified deployment.
+
+---
+
+## 📦 Project Structure
+
+```
+- backend/          # Spring Boot application
+- portal/           # Angular application
+- docker-compose.demo.yml
+```
+
+---
+## ⚙️ Single click Running
+
+Open docker-compose.demo.yml and run all services
+
+
+## ⚙️ Building and Running
+
+### 1️⃣ Build the Spring Boot Backend
+
+Navigate to the `backend/` directory:
+
+```bash
+./mvnw clean package -DskipTests
+```
+
+This generates a JAR file in `backend/target/`.
+
+---
+
+### 2️⃣ Build the Angular Portal
+
+Navigate to the `portal/` directory:
+
+```bash
+npm install
+npm run build:prod
+```
+
+The production-ready files will be in `portal/dist/`.
+
+---
+
+### 3️⃣ Dockerfile Overview
+
+- **Backend Dockerfile** (`backend/Dockerfile`):
+
+- **Portal Dockerfile** (`portal/Dockerfile`):
+
+✅ Make sure to include a `nginx.conf` file in the `portal/` directory for proper routing support in your Angular app.
+
+---
+
+### 4️⃣ Docker Compose Configuration
+
+The `docker-compose.demo.yml` file orchestrates backend, portal and database:
+
+---
+
+### 5️⃣ Run Everything with Docker Compose
+
+From the project root:
+
+```bash
+docker-compose -f docker-compose.demo.yml up -d --build --force-recreate
+```
+
+This will:
+✅ Build backend and portal images
+✅ Run database on [jdbc:postgresql://db:5432/vehicle-db](jdbc:postgresql://db:5432/vehicle-db)
+✅ Run backend on [http://localhost:8080](http://localhost:8080)  
+✅ Run portal on [http://localhost:3000](http://localhost:3000)
+
+---
+
+## 🚀 Access
+
+- **Backend**: [http://localhost:8080](http://localhost:8080)
+- **API description**: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+- **Portal**: [http://localhost:3000](http://localhost:3000)
+
+---
+
+### 📝 Additional Notes
+
+- If you need to update the backend or portal, rebuild their respective images by running:
+  ```bash
+  docker-compose build backend
+  docker-compose build portal
+  ```
+  Then restart:
+  ```bash
+  docker-compose up
+  ```
+
+- Update `nginx.conf` in the `portal/` directory as needed for SPA (single-page application) routing.
+
+`nginx.conf` is for fly.io deployment
+`nginx.demo.conf` is for docker-compose deployment
+
+- If you switch to a different parent POM in the backend, remember to adjust the `<license>` and `<developers>` elements in `pom.xml` if needed.
+
+- For local development without Docker, you can:
+    - Run the backend:
+      ```bash
+      ./mvnw spring-boot:run
+      ```
+    - Serve the Angular portal:
+      ```bash
+      npm start
+      ```
+  And they’ll be accessible at their respective ports.
+
+---
+
+Enjoy building your app! 🚀
 
 ### Reference Documentation
 
