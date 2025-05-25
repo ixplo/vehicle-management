@@ -30,15 +30,7 @@ public class VehicleService {
     }
 
     public Vehicle create(Vehicle vehicle, String createdBy) {
-        Make make = vehicle.getMake();
-        if (!makeRepository.existsById(make.getMakeId())) {
-            makeRepository.save(make);
-        }
-        Model model = vehicle.getModel();
-        if (!modelRepository.existsById(model.getModelId())) {
-            model.setMake(make);
-            modelRepository.save(model);
-        }
+        checkAndSaveMakeAndModel(vehicle);
 
         vehicle.setCreatedAt(OffsetDateTime.now());
         vehicle.setCreatedBy(createdBy);
@@ -57,11 +49,29 @@ public class VehicleService {
 
     public Vehicle update(UUID id, Vehicle vehicle) {
         Vehicle existing = getById(id);
+
+        checkAndSaveMakeAndModel(vehicle);
+
         vehicle.setVehicleId(id);
         vehicle.setCreatedAt(existing.getCreatedAt());
         vehicle.setCreatedBy(existing.getCreatedBy());
         vehicle.setUpdatedAt(OffsetDateTime.now());
+        vehicle.setIsActive(existing.getIsActive());
+
         return vehicleRepository.save(vehicle);
+    }
+
+    private void checkAndSaveMakeAndModel(Vehicle vehicle) {
+        Make make = vehicle.getMake();
+        if (!makeRepository.existsById(make.getMakeId())) {
+            makeRepository.save(make);
+        }
+
+        Model model = vehicle.getModel();
+        if (!modelRepository.existsById(model.getModelId())) {
+            model.setMake(make);
+            modelRepository.save(model);
+        }
     }
 
     public void delete(UUID id, String deletedBy) {
