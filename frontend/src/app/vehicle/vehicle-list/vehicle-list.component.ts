@@ -23,7 +23,7 @@ export class VehicleListComponent implements OnInit {
   load() {
     this.vehicleService.list(this.page, this.size).subscribe(page => {
       this.vehicles = page.content;
-      this.totalPages = page.totalPages;
+      this.totalPages = page.page.totalPages;
     });
   }
 

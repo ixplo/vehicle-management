@@ -25,6 +25,6 @@
 </table>
 
 <button class="btn btn-sm btn-secondary" (click)="prev()" [disabled]="page === 0">Prev</button>
-<span class="badge bg-info">PageModel {{ page + 1 }} of {{ totalPages }}</span>
+<span class="badge bg-info">Page {{ page + 1 }} of {{ totalPages }}</span>
 <button class="btn btn-sm btn-secondary" (click)="next()" [disabled]="page + 1 >= totalPages">Next</button>
 <button class="btn btn-sm btn-secondary" routerLink="/vehicles/new">New VehicleModel</button>
