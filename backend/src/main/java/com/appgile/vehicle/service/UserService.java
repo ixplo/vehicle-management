@@ -2,6 +2,7 @@ package com.appgile.vehicle.service;
 
 import com.appgile.vehicle.model.User;
 import com.appgile.vehicle.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,10 @@ public class UserService {
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
         return userRepository.save(user);
+    }
+
+    public User getById(UUID id) {
+        return userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     public void delete(UUID id) {

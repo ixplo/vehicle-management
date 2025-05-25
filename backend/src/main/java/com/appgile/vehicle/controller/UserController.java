@@ -1,10 +1,10 @@
 package com.appgile.vehicle.controller;
 
+import com.appgile.vehicle.model.User;
+import com.appgile.vehicle.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import com.appgile.vehicle.model.User;
-import com.appgile.vehicle.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +41,12 @@ public class UserController {
             @Parameter(description = "User object to create", required = true)
             @RequestBody User user) {
         return userService.create(user);
+    }
+
+    @Operation(summary = "Get user details")
+    @GetMapping("/{id}")
+    public User get(@PathVariable UUID id) {
+        return userService.getById(id);
     }
 
     @Operation(summary = "Delete a user by ID")
