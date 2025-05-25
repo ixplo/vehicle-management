@@ -8,3 +8,11 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
   flyway:
     enabled: false
+cloud:
+  aws:
+    credentials:
+      access-key: test-access-key
+      secret-key: test-secret-key
+    s3:
+      bucket: my-test-bucket
+      endpoint: http://localhost:4566

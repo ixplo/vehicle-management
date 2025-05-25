@@ -15,7 +15,18 @@ services:
       - '45432:5432'
     networks:
       - appnet
-      
+  localstack:
+    image: localstack/localstack:latest
+    container_name: vehicle-s3
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3
+      - BUCKET_NAME=test-bucket
+    volumes:
+      - ./scripts/localstack-init:/etc/localstack/init/ready.d
+    networks:
+      - appnet
   backend:
     build:
       context: ./backend
@@ -28,6 +39,12 @@ services:
       DB_URL: ${DB_URL:-jdbc:postgresql://db:5432/vehicle-db}
       DB_USER: ${DB_USER:-postgres}
       DB_PASS: ${DB_PASS:-password}
+      AWS_BUCKET_NAME: ${AWS_BUCKET_NAME:-test-bucket}
+      AWS_REGION: ${AWS_REGION:-us-east-1}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-test-access-key}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-test-access-key}
+      AWS_S3_MAX_FILE_SIZE: ${AWS_S3_MAX_FILE_SIZE:-5242880}
+      AWS_S3_ENDPOINT: ${AWS_S3_ENDPOINT:-http://localhost:4566}
     ports:
       - "8080:8080"
     restart: unless-stopped

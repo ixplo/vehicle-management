@@ -9,6 +9,7 @@ This project combines a **Spring Boot** backend with an **Angular** portal. It u
 ```
 - backend/          # Spring Boot application
 - portal/           # Angular application
+- doc/              # Documentation
 - docker-compose.demo.yml
 ```
 

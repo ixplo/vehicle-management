@@ -33,4 +33,12 @@ export class VehicleService {
     const params = new HttpParams().set('deletedBy', deletedBy);
     return this.http.delete<void>(`${this.baseUrl}/${id}`, { params });
   }
+
+  uploadPhoto(vehicleId: string, formData: FormData): Observable<string> {
+    return this.http.post<string>(`${this.baseUrl}/${vehicleId}/photo`, formData);
+  }
+
+  getPhotoUrl(vehicleId: string) {
+    return `${this.baseUrl}/${vehicleId}/photo`
+  }
 }

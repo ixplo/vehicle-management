@@ -16,6 +16,10 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
 info:
   build:
     time: "@buildTime@"
@@ -34,3 +38,16 @@ logging:
     root: INFO
     org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer: ERROR
     org.springframework.security: DEBUG
+
+# AWS S3 Configuration
+cloud:
+  aws:
+    s3:
+      bucket: ${AWS_BUCKET_NAME}
+      max-file-size: ${AWS_S3_MAX_FILE_SIZE:5242880}
+      endpoint: ${AWS_S3_ENDPOINT}
+    region:
+      static: ${AWS_REGION:us-east-1}
+    credentials:
+      access-key: ${AWS_ACCESS_KEY_ID}
+      secret-key: ${AWS_SECRET_ACCESS_KEY}

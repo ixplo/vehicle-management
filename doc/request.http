@@ -9,3 +9,5 @@ Content-Type: application/json
 
 ###
 
+GET http://localhost:4566/test-bucket/
+Authorization: AWS4-HMAC-SHA256 Credential=test-access-key/test_secret

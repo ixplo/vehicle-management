@@ -10,7 +10,7 @@ import { Vehicle } from '../model/vehicle';
   styleUrls: ['vehicle-form.component.scss']
 })
 export class VehicleFormComponent implements OnInit {
-  vehicle: Vehicle = { make: '', model: '', year: new Date().getFullYear(), price: 0 };
+  vehicle: Vehicle = { make: '', model: '', year: new Date().getFullYear(), price: 0, photoUrl: '' };
   isEdit = false;
 
   constructor(
@@ -37,5 +37,29 @@ export class VehicleFormComponent implements OnInit {
 
   cancel() {
     this.router.navigate(['/vehicles']);
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const vehicleId = this.vehicle.vehicleId;
+      if (vehicleId) {
+        this.vehicleService.uploadPhoto(vehicleId, formData).subscribe({
+          next: (url) => {
+            console.log('Uploaded photo URL:', url);
+            this.vehicle.photoUrl = url;
+          },
+          error: (err) => console.error('Photo upload failed', err)
+        });
+      }
+    }
+  }
+
+  getPhotoUrl(): string {
+    return this.vehicle.vehicleId ? this.vehicleService.getPhotoUrl(this.vehicle.vehicleId) : '';
   }
 }

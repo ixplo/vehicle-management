@@ -5,6 +5,7 @@ import com.appgile.vehicle.service.VehicleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
@@ -65,6 +67,33 @@ public class VehicleController {
     public void delete(@PathVariable UUID id, @RequestParam String deletedBy) {
         log.info("Deleting vehicle with ID: {} by user: {}", id, deletedBy);
         service.delete(id, deletedBy);
+    }
+
+    @PostMapping("/{vehicleId}/photo")
+    public ResponseEntity<String> uploadVehiclePhoto(
+            @PathVariable UUID vehicleId,
+            @RequestParam("file") MultipartFile file) {
+        log.info("Uploading vehicle photo for vehicle with ID: {}", vehicleId);
+        try {
+            String photoUrl = service.saveVehiclePhoto(vehicleId, file);
+            return ResponseEntity.ok(photoUrl);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{vehicleId}/photo")
+    public ResponseEntity<byte[]> getVehiclePhoto(@PathVariable UUID vehicleId) {
+        log.info("Fetching vehicle photo for vehicle with ID: {}", vehicleId);
+        byte[] photoData = service.getVehiclePhoto(vehicleId);
+
+        if (photoData == null || photoData.length == 0) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok()
+                .header("Content-Type", "image/jpeg")
+                .body(photoData);
     }
 
     private String getCurrentUser() {

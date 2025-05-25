@@ -35,6 +35,16 @@
     />
   </div>
 
+  <div class="form-field">
+    <label for="photo">Photo:</label>
+    <input type="file" id="photo" (change)="onFileSelected($event)" accept="image/png, image/jpeg" />
+  </div>
+    
+  <div class="form-field" *ngIf="vehicle.photoUrl">
+    <label>Preview:</label>
+    <img [src]="getPhotoUrl()" alt="Photo preview" class="preview-image" fill="false"/>
+  </div>
+
   <div class="form-buttons">
     <button type="button" (click)="cancel()">Cancel</button>
     <button type="submit" class="highlighted-button">{{ isEdit ? 'Update' : 'Create' }}</button>
