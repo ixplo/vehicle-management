@@ -29,7 +29,7 @@ export class VehicleFormComponent implements OnInit {
 
   save() {
     const op = this.isEdit
-      ? this.vehicleService.update(this.vehicle.id!, this.vehicle)
+      ? this.vehicleService.update(this.vehicle.vehicleId!, this.vehicle)
       : this.vehicleService.create(this.vehicle);
 
     op.subscribe(() => this.router.navigate(['/vehicles']));

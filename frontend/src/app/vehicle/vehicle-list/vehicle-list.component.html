@@ -17,8 +17,8 @@
       <td>{{ vehicle.year }}</td>
       <td>{{ vehicle.price }}</td>
       <td>
-        <button class="btn btn-sm btn-primary" routerLink="/vehicles/edit/{{vehicle.id}}">Edit</button>
-        <button class="btn btn-sm btn-primary" (click)="delete(vehicle.id!)">Delete</button>
+        <button class="btn btn-sm btn-primary" routerLink="/vehicles/edit/{{vehicle.vehicleId}}">Edit</button>
+        <button class="btn btn-sm btn-primary" (click)="delete(vehicle.vehicleId!)">Delete</button>
       </td>
     </tr>
   </tbody>
