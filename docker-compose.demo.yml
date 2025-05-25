@@ -39,7 +39,7 @@ services:
       context: ./portal
       dockerfile: Dockerfile
       args:
-        NGINX_CONF: nginx.demo.conf
+        NGINX_CONF: ${NGINX_CONF:-nginx.conf}
     container_name: vehicle-portal
     ports:
       - "3000:3000"
