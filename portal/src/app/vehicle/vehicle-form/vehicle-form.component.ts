@@ -12,6 +12,7 @@ import { Vehicle } from '../model/vehicle';
 export class VehicleFormComponent implements OnInit {
   vehicle: Vehicle = { make: '', model: '', year: new Date().getFullYear(), price: 0, photoUrl: '' };
   isEdit = false;
+  photoUrl: string;
 
   constructor(
       private route: ActivatedRoute,
@@ -23,7 +24,10 @@ export class VehicleFormComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEdit = true;
-      this.vehicleService.getById(id).subscribe(v => (this.vehicle = v));
+      this.vehicleService.getById(id).subscribe(v => {
+        this.vehicle = v;
+        this.photoUrl = this.getPhotoUrl();
+      });
     }
   }
 
@@ -50,8 +54,7 @@ export class VehicleFormComponent implements OnInit {
       if (vehicleId) {
         this.vehicleService.uploadPhoto(vehicleId, formData).subscribe({
           next: (url) => {
-            console.log('Uploaded photo URL:', url);
-            this.vehicle.photoUrl = url;
+            this.photoUrl = this.getPhotoUrl();
           },
           error: (err) => console.error('Photo upload failed', err)
         });

@@ -40,9 +40,9 @@
     <input type="file" id="photo" (change)="onFileSelected($event)" accept="image/png, image/jpeg" />
   </div>
     
-  <div class="form-field" *ngIf="vehicle.photoUrl">
+  <div class="form-field" *ngIf="photoUrl">
     <label>Preview:</label>
-    <img [src]="getPhotoUrl()" alt="Photo preview" class="preview-image" fill="false"/>
+    <img [src]="photoUrl" alt="Photo preview" class="preview-image"/>
   </div>
 
   <div class="form-buttons">

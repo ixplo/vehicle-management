@@ -35,10 +35,14 @@ export class VehicleService {
   }
 
   uploadPhoto(vehicleId: string, formData: FormData): Observable<string> {
-    return this.http.post<string>(`${this.baseUrl}/${vehicleId}/photo`, formData);
+    return this.http.post(
+      `${this.baseUrl}/${vehicleId}/photo`,
+      formData,
+      { responseType: 'text' }
+    );
   }
 
-  getPhotoUrl(vehicleId: string) {
-    return `${this.baseUrl}/${vehicleId}/photo`
+  getPhotoUrl(vehicleId: string): string {
+    return `${this.baseUrl}/${vehicleId}/photo`;
   }
 }
