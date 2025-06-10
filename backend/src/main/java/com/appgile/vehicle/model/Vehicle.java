@@ -31,6 +31,9 @@ public class Vehicle {
     @Column(length = 50)
     private String type;
 
+    @Column(length = 30, name = "use_of_vehicle")
+    private String useOfVehicle;
+
     private String derivative;
 
     @Column(name = "registration_date")

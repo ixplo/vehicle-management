@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS vehicle (
     vehicle_id            UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     type                  VARCHAR(50),
+    use_of_vehicle        VARCHAR(30),
     derivative            VARCHAR(100),
     year                  INTEGER NOT NULL,
     price                 NUMERIC(12,2) NOT NULL CHECK (price >= 0),

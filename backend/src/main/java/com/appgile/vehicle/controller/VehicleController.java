@@ -44,10 +44,12 @@ public class VehicleController {
     @GetMapping
     public Page<Vehicle> list( 
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String useOfVehicle,
+            @RequestParam(required = false) String type
     ) {
-        Page<Vehicle> result = service.list(PageRequest.of(page, size));
-        log.info("Listing vehicles - page: {}, size: {}", page, size);
+        Page<Vehicle> result = service.list(useOfVehicle, type, PageRequest.of(page, size));
+        log.info("Listing vehicles - page: {}, size: {}, useOfVehicle: {}, type: {}", page, size, useOfVehicle, type);
         return result;
     }
 

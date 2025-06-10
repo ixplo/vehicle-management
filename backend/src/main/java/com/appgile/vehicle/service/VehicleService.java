@@ -40,8 +40,8 @@ public class VehicleService {
         return vehicleRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    public Page<Vehicle> list(Pageable pageable) {
-        return vehicleRepository.findAll(pageable);
+    public Page<Vehicle> list(String useOfVehicle, String type, Pageable pageable) {
+        return vehicleRepository.findByUseOfVehicleAndType(useOfVehicle, type, pageable);
     }
 
     public Vehicle update(UUID id, Vehicle vehicle) {
