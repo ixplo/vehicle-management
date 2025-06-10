@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
+import java.util.List;
+import com.appgile.vehicle.model.Photo;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -82,18 +84,11 @@ public class VehicleController {
         }
     }
 
-    @GetMapping("/{vehicleId}/photo")
-    public ResponseEntity<byte[]> getVehiclePhoto(@PathVariable UUID vehicleId) {
-        log.info("Fetching vehicle photo for vehicle with ID: {}", vehicleId);
-        byte[] photoData = service.getVehiclePhoto(vehicleId);
-
-        if (photoData == null || photoData.length == 0) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok()
-                .header("Content-Type", "image/jpeg")
-                .body(photoData);
+    @GetMapping("/{vehicleId}/photos")
+    public ResponseEntity<List<Photo>> getVehiclePhotos(@PathVariable UUID vehicleId) {
+        log.info("Fetching all vehicle photos for vehicle with ID: {}", vehicleId);
+        List<Photo> photos = service.getVehiclePhotos(vehicleId);
+        return ResponseEntity.ok(photos);
     }
 
     private String getCurrentUser() {

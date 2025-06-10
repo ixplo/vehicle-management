@@ -1,10 +1,7 @@
 package com.appgile.vehicle.service;
 
-import com.appgile.vehicle.model.Make;
-import com.appgile.vehicle.model.Model;
+import com.appgile.vehicle.model.Photo;
 import com.appgile.vehicle.model.Vehicle;
-import com.appgile.vehicle.repository.MakeRepository;
-import com.appgile.vehicle.repository.ModelRepository;
 import com.appgile.vehicle.repository.VehicleRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -21,23 +20,15 @@ import java.util.UUID;
 public class VehicleService {
     
     private final VehicleRepository vehicleRepository;
-    private final MakeRepository makeRepository;
-    private final ModelRepository modelRepository;
     private final StorageService storageService;
     
     public VehicleService(VehicleRepository vehicleRepository,
-                          MakeRepository makeRepository,
-                          ModelRepository modelRepository,
                           StorageService storageService) {
         this.vehicleRepository = vehicleRepository;
-        this.makeRepository = makeRepository;
-        this.modelRepository = modelRepository;
         this.storageService = storageService;
     }
 
     public Vehicle create(Vehicle vehicle, String createdBy) {
-        checkAndSaveMakeAndModel(vehicle);
-
         vehicle.setCreatedAt(OffsetDateTime.now());
         vehicle.setCreatedBy(createdBy);
         vehicle.setIsActive(true);
@@ -56,8 +47,6 @@ public class VehicleService {
     public Vehicle update(UUID id, Vehicle vehicle) {
         Vehicle existing = getById(id);
 
-        checkAndSaveMakeAndModel(vehicle);
-
         vehicle.setVehicleId(id);
         vehicle.setCreatedAt(existing.getCreatedAt());
         vehicle.setCreatedBy(existing.getCreatedBy());
@@ -65,19 +54,6 @@ public class VehicleService {
         vehicle.setIsActive(existing.getIsActive());
 
         return vehicleRepository.save(vehicle);
-    }
-
-    private void checkAndSaveMakeAndModel(Vehicle vehicle) {
-        Make make = vehicle.getMake();
-        if (!makeRepository.existsById(make.getMakeId())) {
-            makeRepository.save(make);
-        }
-
-        Model model = vehicle.getModel();
-        if (!modelRepository.existsById(model.getModelId())) {
-            model.setMake(make);
-            modelRepository.save(model);
-        }
     }
 
     public void delete(UUID id, String deletedBy) {
@@ -95,7 +71,13 @@ public class VehicleService {
         Vehicle vehicle = vehicleRepository.findById(vehicleId)
                 .orElseThrow(() -> new IllegalArgumentException("Vehicle not found"));
 
-        vehicle.setPhotoUrl(photoUrl);
+        if (vehicle.getPhotos() == null) {
+            vehicle.setPhotos(new ArrayList<>());
+        }
+        Photo photo = new Photo();
+        photo.setPhotoUrl(photoUrl);
+        photo.setVehicle(vehicle);
+        vehicle.getPhotos().add(photo);
         vehicle.setUpdatedAt(OffsetDateTime.now());
         vehicleRepository.save(vehicle);
 
@@ -103,10 +85,10 @@ public class VehicleService {
     }
 
 
-    public byte[] getVehiclePhoto(UUID vehicleId) {
+    public List<Photo> getVehiclePhotos(UUID vehicleId) {
         Vehicle vehicle = vehicleRepository.findById(vehicleId)
                 .orElseThrow(() -> new IllegalArgumentException("Vehicle not found"));
-        String fileName = vehicle.getPhotoUrl();
-        return storageService.getFile(fileName);
+        List<Photo> photos = vehicle.getPhotos();
+        return photos != null ? photos : new ArrayList<>();
     }
 }
