@@ -5,8 +5,6 @@ import com.appgile.vehicle.model.Vehicle;
 import com.appgile.vehicle.repository.VehicleRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,8 +38,8 @@ public class VehicleService {
         return vehicleRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    public Page<Vehicle> list(String useOfVehicle, String type, Pageable pageable) {
-        return vehicleRepository.findByUseOfVehicleAndType(useOfVehicle, type, pageable);
+    public List<Vehicle> list(String useOfVehicle, String type) {
+        return vehicleRepository.findByUseOfVehicleAndType(useOfVehicle, type);
     }
 
     public Vehicle update(UUID id, Vehicle vehicle) {

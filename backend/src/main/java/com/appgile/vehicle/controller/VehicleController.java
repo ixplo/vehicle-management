@@ -1,11 +1,11 @@
 package com.appgile.vehicle.controller;
 
+import com.appgile.vehicle.model.Photo;
 import com.appgile.vehicle.model.Vehicle;
 import com.appgile.vehicle.service.VehicleService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,12 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.UUID;
-import java.util.List;
-import com.appgile.vehicle.model.Photo;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -42,14 +40,12 @@ public class VehicleController {
     }
 
     @GetMapping
-    public Page<Vehicle> list( 
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
+    public List<Vehicle> list( 
             @RequestParam(required = false) String useOfVehicle,
             @RequestParam(required = false) String type
     ) {
-        Page<Vehicle> result = service.list(useOfVehicle, type, PageRequest.of(page, size));
-        log.info("Listing vehicles - page: {}, size: {}, useOfVehicle: {}, type: {}", page, size, useOfVehicle, type);
+        List<Vehicle> result = service.list(useOfVehicle, type);
+        log.info("Listing vehicles - useOfVehicle: {}, type: {}", useOfVehicle, type);
         return result;
     }
 
