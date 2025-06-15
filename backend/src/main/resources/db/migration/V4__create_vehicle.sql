@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS vehicle (
     eco_label             VARCHAR(1),
     number_of_doors       INTEGER,
     transmission_type     VARCHAR(30),
-    fuel_icon             VARCHAR(30),
+    fuel_type             VARCHAR(30),
     visit_counter         INTEGER,
     dealer_link           VARCHAR(500),
     supplier_website_url  VARCHAR(500),
