@@ -1,0 +1,62 @@
+<div class="vehicle-card">
+    <!-- Card Image -->
+    <div class="card-image-container">
+        <img [alt]="vehicle.derivative" class="vehicle-image" />
+        <div class="eco-badge">
+            <p-badge [value]="vehicle.ecoLabel" [severity]="getEcoLabelSeverity(vehicle.ecoLabel)"> </p-badge>
+        </div>
+    </div>
+
+    <!-- Card Content -->
+    <div class="card-content">
+        <!-- Vehicle Title -->
+        <h3 class="vehicle-title">{{ vehicle.derivative }}</h3>
+
+        <!-- Price -->
+        <div class="vehicle-price">{{ formatPrice(vehicle.price) }}</div>
+
+        <!-- Date and Mileage -->
+        <div class="vehicle-meta">
+            <span>{{ formatDate(vehicle.registrationDate) }}</span>
+            <span class="separator">•</span>
+            <span>{{ formatKilometers(vehicle.kilometers) }}</span>
+        </div>
+
+        <!-- Vehicle Specs -->
+        <div class="vehicle-specs">
+            <div class="spec-item">
+                <i class="pi pi-users"></i>
+                <span>{{ vehicle.numberOfDoors }}-doors</span>
+            </div>
+            <div class="spec-item">
+                <i class="pi pi-cog"></i>
+                <span>{{ vehicle.transmissionType }}</span>
+            </div>
+            <div class="spec-item">
+                <i class="pi pi-car"></i>
+                <span>{{ vehicle.fuelIcon }}</span>
+            </div>
+        </div>
+
+        <!-- Rating and Views -->
+        <div class="vehicle-rating">
+            <div class="rating-item">
+                <i class="pi pi-eye"></i>
+                <span>{{ vehicle.visitCounter }}</span>
+            </div>
+            <div class="rating-badge">
+                <p-badge [value]="vehicle.ecoLabel" severity="secondary"></p-badge>
+            </div>
+            <div class="action-icons">
+                <i class="pi pi-bookmark"></i>
+                <i class="pi pi-share-alt"></i>
+            </div>
+        </div>
+
+        <!-- Action Button -->
+        <div class="card-actions">
+            <p-button label="Ver detalles" class="details-button" [routerLink]="['/vehicle', vehicle.vehicleId]"> </p-button>
+            <p-button icon="pi pi-angle-right" class="arrow-button" [text]="true"> </p-button>
+        </div>
+    </div>
+</div>
