@@ -1,0 +1,29 @@
+.custom-tag {
+    display: inline-flex;
+    align-items: center;
+    width: 96px;
+    height: 28px;
+    padding-top: 4px;
+    padding-right: 10px;
+    padding-bottom: 4px;
+    padding-left: 10px;
+    gap: 6px;
+    border-radius: 6px;
+    border: 1px solid #D9D6FE;
+    background-color: #F4F3FF;
+    
+    .tag-icon {
+        color: #5925DC;
+        font-size: 14px;
+        flex-shrink: 0;
+    }
+    
+    .tag-text {
+        color: #5925DC;
+        font-size: 12px;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

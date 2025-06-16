@@ -1,0 +1,107 @@
+<div class="vehicle-card">
+    <!-- Card Image -->
+    <div class="card-image-container">
+        <img 
+            [src]="getMainImage()" 
+            [alt]="vehicle.derivative" 
+            class="vehicle-image"
+            (error)="onImageError($event)"
+            loading="lazy" />
+        <div class="eco-badge">
+            <p-badge [value]="vehicle.ecoLabel" [severity]="getEcoLabelSeverity(vehicle.ecoLabel)"></p-badge>
+        </div>
+        <div class="vehicle-type-badge">
+            <span class="type-label">{{ vehicle.type }}</span>
+        </div>
+        <div class="year-badge">
+            <span>{{ vehicle.year }}</span>
+        </div>
+    </div>
+
+    <!-- Card Content -->
+    <div class="card-content">
+        <!-- Vehicle Title and Use -->
+        <div class="vehicle-header">
+            <h3 class="vehicle-title">{{ vehicle.derivative }}</h3>
+            <span class="vehicle-use">{{ vehicle.useOfVehicle }}</span>
+        </div>
+
+        <!-- Price -->
+        <div class="vehicle-price">{{ formatPrice(vehicle.price) }}</div>
+
+        <!-- Description -->
+        <p class="vehicle-description">{{ truncateDescription(vehicle.description) }}</p>
+
+        <!-- Date and Mileage -->
+        <div class="vehicle-meta">
+            <div class="meta-item">
+                <i class="pi pi-calendar"></i>
+                <span>{{ formatDate(vehicle.registrationDate) }}</span>
+            </div>
+            <div class="meta-item">
+                <i class="pi pi-clock"></i>
+                <span>{{ formatKilometers(vehicle.kilometers) }}</span>
+            </div>
+        </div>
+
+        <!-- Vehicle Specs -->
+        <div class="vehicle-specs">
+            <app-label 
+                [icon]="'pi pi-users'"
+                [text]="vehicle.numberOfDoors + ' doors'">
+            </app-label>
+            <app-label 
+                [icon]="'pi pi-cog'"
+                [text]="vehicle.transmissionType">
+            </app-label>
+            <app-label 
+                [icon]="getFuelIcon(vehicle.fuelIcon)"
+                [text]="capitalizeFirst(vehicle.fuelIcon)">
+            </app-label>
+        </div>
+
+        <!-- Rating and Views -->
+        <div class="vehicle-stats">
+            <div class="stat-item">
+                <i class="pi pi-eye"></i>
+                <span>{{ formatViews(vehicle.visitCounter) }} views</span>
+            </div>
+            <div class="stat-item">
+                <i class="pi pi-images"></i>
+                <span>{{ vehicle.photos.length }} photos</span>
+            </div>
+            <div class="action-icons">
+                <button class="icon-btn" title="Save to favorites">
+                    <i class="pi pi-heart"></i>
+                </button>
+                <button class="icon-btn" title="Share vehicle">
+                    <i class="pi pi-share-alt"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Supplier Info -->
+        <div class="supplier-info" *ngIf="vehicle.supplierInternalCode">
+            <small class="supplier-code">Ref: {{ vehicle.supplierInternalCode }}</small>
+        </div>
+
+        <!-- Action Button -->
+        <div class="card-actions">
+            <p-button 
+                label="View Details" 
+                icon="pi pi-external-link"
+                class="details-button" 
+                [routerLink]="['/vehicle', vehicle.vehicleId]"
+                styleClass="w-full">
+            </p-button>
+        </div>
+
+        <!-- Dealer Link -->
+        <div class="dealer-link" *ngIf="vehicle.dealerLink">
+            <a [href]="vehicle.dealerLink" target="_blank" rel="noopener noreferrer" class="dealer-btn">
+                <i class="pi pi-external-link"></i>
+                Visit Dealer
+            </a>
+        </div>
+    </div>
+</div>
