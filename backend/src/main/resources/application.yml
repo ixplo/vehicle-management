@@ -31,6 +31,8 @@ management:
   endpoint:
     info:
       access: read_only
+jwt:
+  secret: Zm9vYmFyYmF6cXV4MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
 logging:
   file:
     name: logs/app.log

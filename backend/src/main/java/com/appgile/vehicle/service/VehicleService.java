@@ -31,6 +31,12 @@ public class VehicleService {
         vehicle.setCreatedBy(createdBy);
         vehicle.setIsActive(true);
 
+        if (vehicle.getPhotos() != null) {
+            for (Photo photo : vehicle.getPhotos()) {
+                photo.setVehicle(vehicle);
+            }
+        }
+
         return vehicleRepository.save(vehicle);
     }
 

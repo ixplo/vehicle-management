@@ -5,6 +5,7 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -14,11 +15,12 @@ import java.util.List;
 @Component
 public class JwtUtil {
 
-    private final String SECRET_KEY = "your-256-bit-secret-goes-here-your-256-bit-secret";
+    @Value("${jwt.secret}")
+    private String secretKey;
     private final long EXPIRATION_TIME = 86400000; // 1 day in ms
 
     private Key getSigningKey() {
-        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+        return Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
     public String generateToken(String username, String role) {
