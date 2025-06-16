@@ -271,10 +271,30 @@ export class AppConfigurator {
         const palettes: SurfacesType[] = [{ name: 'noir', palette: {} }];
 
         colors.forEach((color) => {
-            palettes.push({
-                name: color,
-                palette: presetPalette?.[color as KeyOfType<typeof presetPalette>] as SurfacesType['palette']
-            });
+            if (color === 'pink') {
+                // Custom pink palette with #CD0986 as the 500 color
+                palettes.push({
+                    name: color,
+                    palette: {
+                        50: '#fdf2f8',
+                        100: '#fce7f3',
+                        200: '#fbcfe8',
+                        300: '#f8a5c2',
+                        400: '#f472b6',
+                        500: '#CD0986',
+                        600: '#b91c7c',
+                        700: '#a21171',
+                        800: '#8b0a5b',
+                        900: '#701a4a',
+                        950: '#4c0519'
+                    }
+                });
+            } else {
+                palettes.push({
+                    name: color,
+                    palette: presetPalette?.[color as KeyOfType<typeof presetPalette>] as SurfacesType['palette']
+                });
+            }
         });
 
         return palettes;

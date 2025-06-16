@@ -145,16 +145,16 @@ export class VehicleService {
     }
 
     getVehicleById(id: string): Observable<Vehicle> {
-        // Return mock data for specific vehicle
-        const vehicle = this.mockVehicles.find(v => v.vehicleId === id);
-        if (vehicle) {
-            return of(vehicle);
-        }
+        // // Return mock data for specific vehicle
+        // const vehicle = this.mockVehicles.find(v => v.vehicleId === id);
+        // if (vehicle) {
+        //     return of(vehicle);
+        // }
         
-        // Return first vehicle as fallback
-        return of(this.mockVehicles[0]);
+        // // Return first vehicle as fallback
+        // return of(this.mockVehicles[0]);
         
         // Uncomment below line when backend is working
-        // return this.http.get<Vehicle>(`${this.apiUrl}/v1/vehicles/${id}`);
+        return this.http.get<Vehicle>(`${this.apiUrl}/v1/vehicles/${id}`);
     }
 }
