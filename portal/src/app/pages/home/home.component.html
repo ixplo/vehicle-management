@@ -1,0 +1,21 @@
+<div class="home-container">
+    <div class="header-section">
+        <h1 class="page-title">Vehicle Marketplace</h1>
+        <p class="page-subtitle">Discover your perfect vehicle from our curated collection</p>
+    </div>
+
+    <div class="loading-container" *ngIf="loading">
+        <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+        <p>Loading vehicles...</p>
+    </div>
+
+    <div class="vehicles-grid" *ngIf="!loading">
+        <app-vehicle-card *ngFor="let vehicle of vehicles" [vehicle]="vehicle"> </app-vehicle-card>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && vehicles.length === 0">
+        <i class="pi pi-car" style="font-size: 4rem; color: #ccc"></i>
+        <h3>No vehicles available</h3>
+        <p>Please check back later for new listings.</p>
+    </div>
+</div>
