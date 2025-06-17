@@ -31,6 +31,11 @@ management:
   endpoint:
     info:
       access: read_only
+jwt:
+  secret: Zm9vYmFyYmF6cXV4MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
+swagger:
+  server:
+    url: https://vehicle-management.fly.dev
 logging:
   file:
     name: logs/app.log

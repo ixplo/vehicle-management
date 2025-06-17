@@ -1,15 +1,18 @@
 package com.appgile.vehicle.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -23,8 +26,10 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Vehicle {
     @Id
+    @GeneratedValue
+    @UuidGenerator
     @Column(name = "vehicle_id")
-    private UUID vehicleId = UUID.randomUUID();
+    private UUID vehicleId;
 
     @Column(length = 50)
     private String type;
@@ -83,6 +88,7 @@ public class Vehicle {
     private Boolean isActive = true;
 
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference
     @OrderBy("ordering ASC")
     private List<Photo> photos;
 }

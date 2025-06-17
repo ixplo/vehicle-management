@@ -1,5 +1,5 @@
-# auth
-POST http://localhost:8088/api/v1/auth/login
+### auth
+POST http://localhost:8080/api/v1/auth/login
 Content-Type: application/json
 
 {
@@ -7,7 +7,48 @@ Content-Type: application/json
   "password": "password"
 }
 
-###
+> {% client.global.set("token", response.body.token); %}
 
+###
 GET http://localhost:4566/test-bucket/
 Authorization: AWS4-HMAC-SHA256 Credential=test-access-key/test_secret
+
+### create vehicle
+POST http://localhost:8080/api/v1/vehicles
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "type": "string",
+  "useOfVehicle": "string",
+  "registrationDate": "2025-06-16",
+  "kilometers": 0,
+  "description": "string",
+  "ecoLabel": "A",
+  "numberOfDoors": 0,
+  "transmissionType": "string",
+  "fuelType": "string",
+  "visitCounter": 0,
+  "dealerLink": "string",
+  "year": 0,
+  "price": 0,
+  "supplierWebsiteUrl": "string",
+  "supplierInternalCode": "string",
+  "isActive": true,
+  "photos": [
+    {
+      "photoUrl": "string",
+      "ordering": 0,
+      "description": "string"
+    }
+  ]
+}
+> {%
+    console.log("Full response body:", response.body);
+    // client.global.set("vehicleId", JSON.parse(response.body).vehicleId);
+%}
+
+### get vehicle
+GET http://localhost:8080/api/v1/vehicles/{{vehicleId}}
+Authorization: Bearer {{token}}
+###
