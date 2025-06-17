@@ -123,12 +123,11 @@ export class VehicleCardComponent {
     getFuelIcon(fuelType: string): string {
         switch (fuelType.toLowerCase()) {
             case 'electric':
-                return 'pi pi-bolt';
+                return 'assets/icons/ev.charger.fill 1.svg';
             case 'gasoline':
             case 'petrol':
-                return 'pi pi-car';
             case 'diesel':
-                return 'pi pi-cog';
+                return 'assets/icons/fuelpump.fill 1.svg';
             case 'hybrid':
                 return 'pi pi-refresh';
             default:
@@ -158,19 +157,19 @@ export class VehicleCardComponent {
     /**
      * Get eco label severity for badge styling
      */
-    getEcoLabelSeverity(ecoLabel: string): 'success' | 'info' | 'warn' | 'danger' | 'secondary' | 'contrast' {
+    getEcoLabelIcon(ecoLabel: string): string {
         switch (ecoLabel.toUpperCase()) {
-            case 'A++':
-            case 'A+':
-                return 'success';
-            case 'A':
-                return 'info';
+            case 'ECO':
+                return 'assets/icons/classeco.svg';
+            case 'O':
+                return 'assets/icons/classo.svg';
             case 'B':
-                return 'warn';
+                return 'assets/icons/classb.svg';
             case 'C':
-                return 'secondary';
+                return 'assets/icons/classc.svg';
             default:
-                return 'danger';
+                return 'assets/icons/classeco.svg'; // Default fallback
         }
     }
+
 }

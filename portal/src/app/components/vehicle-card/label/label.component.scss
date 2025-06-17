@@ -21,9 +21,15 @@
     .tag-text {
         color: #5925DC;
         font-size: 12px;
-        font-weight: 500;
+        font-weight: 800;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
+}
+
+.tag-icon-svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-right: 0.375rem;
 }

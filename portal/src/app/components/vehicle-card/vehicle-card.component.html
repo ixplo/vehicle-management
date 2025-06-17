@@ -7,9 +7,6 @@
             class="vehicle-image"
             (error)="onImageError($event)"
             loading="lazy" />
-        <div class="eco-badge">
-            <p-badge [value]="vehicle.ecoLabel" [severity]="getEcoLabelSeverity(vehicle.ecoLabel)"></p-badge>
-        </div>
         <div class="vehicle-type-badge">
             <span class="type-label">{{ vehicle.type }}</span>
         </div>
@@ -21,25 +18,27 @@
     <!-- Card Content -->
     <div class="card-content">
         <!-- Vehicle Title and Use -->
-        <div class="vehicle-header">
+        <div class="vehicle-header flex flex-row justify-between">
+            <div class="vehicle-title-container">
             <h3 class="vehicle-title">{{ vehicle.derivative }}</h3>
-            <span class="vehicle-use">{{ vehicle.useOfVehicle }}</span>
+            <!-- <span class="vehicle-use">{{ vehicle.useOfVehicle }}</span> -->
+        </div>
+        <div class="vehicle-price">{{ formatPrice(vehicle.price) }}</div>
+
         </div>
 
         <!-- Price -->
-        <div class="vehicle-price">{{ formatPrice(vehicle.price) }}</div>
 
         <!-- Description -->
-        <p class="vehicle-description">{{ truncateDescription(vehicle.description) }}</p>
+        <!-- <p class="vehicle-description">{{ truncateDescription(vehicle.description) }}</p> -->
 
         <!-- Date and Mileage -->
         <div class="vehicle-meta">
             <div class="meta-item">
-                <i class="pi pi-calendar"></i>
                 <span>{{ formatDate(vehicle.registrationDate) }}</span>
             </div>
+            <span class="text-xs mb-1">•</span>
             <div class="meta-item">
-                <i class="pi pi-clock"></i>
                 <span>{{ formatKilometers(vehicle.kilometers) }}</span>
             </div>
         </div>
@@ -47,21 +46,32 @@
         <!-- Vehicle Specs -->
         <div class="vehicle-specs">
             <app-label 
-                [icon]="'pi pi-users'"
-                [text]="vehicle.numberOfDoors + ' doors'">
-            </app-label>
+            [icon]="'assets/icons/doors.svg'"
+            [text]="vehicle.numberOfDoors + ' doors'">
+        </app-label>
             <app-label 
-                [icon]="'pi pi-cog'"
+                [icon]="'assets/icons/cogs.svg'"
                 [text]="vehicle.transmissionType">
             </app-label>
             <app-label 
                 [icon]="getFuelIcon(vehicle.fuelIcon)"
                 [text]="capitalizeFirst(vehicle.fuelIcon)">
             </app-label>
+            <app-label 
+                [icon]="'pi pi-eye'"
+                [text]="formatViews(vehicle.visitCounter) + ' views'">
+            </app-label>
+            <div class="eco-badge">
+                <img 
+                    [src]="getEcoLabelIcon(vehicle.ecoLabel)" 
+                    [alt]="'Eco class ' + vehicle.ecoLabel"
+                    class="eco-icon"
+                    loading="lazy">
+            </div>
         </div>
 
         <!-- Rating and Views -->
-        <div class="vehicle-stats">
+        <!-- <div class="vehicle-stats">
             <div class="stat-item">
                 <i class="pi pi-eye"></i>
                 <span>{{ formatViews(vehicle.visitCounter) }} views</span>
@@ -78,30 +88,29 @@
                     <i class="pi pi-share-alt"></i>
                 </button>
             </div>
-        </div>
+        </div> -->
 
         <!-- Supplier Info -->
-        <div class="supplier-info" *ngIf="vehicle.supplierInternalCode">
+        <!-- <div class="supplier-info" *ngIf="vehicle.supplierInternalCode">
             <small class="supplier-code">Ref: {{ vehicle.supplierInternalCode }}</small>
-        </div>
+        </div> -->
 
         <!-- Action Button -->
-        <div class="card-actions">
+        <div class="card-actions flex flex-row justify-end">
             <p-button 
+                rounded="true"
                 label="View Details" 
-                icon="pi pi-external-link"
                 class="details-button" 
                 [routerLink]="['/vehicle', vehicle.vehicleId]"
                 styleClass="w-full">
             </p-button>
-        </div>
+            <div class="dealer-link" *ngIf="vehicle.dealerLink">
+                <button class="custom-share-button" type="button" title="Share vehicle">
+                    <img src="assets/icons/share-icon.svg" alt="Share" class="share-icon">
+                </button>
+            </div>
 
         <!-- Dealer Link -->
-        <div class="dealer-link" *ngIf="vehicle.dealerLink">
-            <a [href]="vehicle.dealerLink" target="_blank" rel="noopener noreferrer" class="dealer-btn">
-                <i class="pi pi-external-link"></i>
-                Visit Dealer
-            </a>
-        </div>
+       
     </div>
 </div>

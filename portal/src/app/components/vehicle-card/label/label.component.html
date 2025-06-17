@@ -1,4 +1,5 @@
 <div class="custom-tag">
-    <i *ngIf="icon" [class]="icon" class="tag-icon"></i>
+    <i *ngIf="icon && !isSvgIcon()" [class]="icon" class="tag-icon"></i>
+    <img *ngIf="icon && isSvgIcon()" [src]="icon" [alt]="text" class="tag-icon-svg">
     <span class="tag-text">{{ text }}</span>
 </div>

@@ -10,4 +10,8 @@ import { CommonModule } from '@angular/common';
 export class LabelComponent {
   @Input() text: string = '';
   @Input() icon: string = '';
+
+  isSvgIcon(): boolean {
+    return this.icon.includes('.svg');
+  }
 }

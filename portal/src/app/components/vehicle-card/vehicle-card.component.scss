@@ -5,7 +5,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
-  max-width: 300px;
+  max-width: 332px;
   
   &:hover {
     transform: translateY(-4px);
@@ -44,6 +44,7 @@
 }
 
 .card-content {
+  height: 268px;
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -69,13 +70,46 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #6b7280;
-  font-size: 0.875rem;
+  font-weight: 400;
+  color: #535862;
+  font-size: 1rem;
   
   .separator {
     color: #d1d5db;
   }
 }
+
+// ... existing code ...
+
+.custom-share-button {
+  background: #F2F7FF;
+  border: 1px solid #B6D4FF;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: #E6F0FF;
+    border-color: #9BC5FF;
+    transform: scale(1.05);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+  
+  .share-icon {
+    width: 18px;
+    height: 16px;
+  }
+}
+
 
 .vehicle-specs {
   display: flex;
@@ -148,15 +182,12 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 0.5rem;
+  margin-top: auto;
   
   .details-button {
     flex: 1;
     
     :host ::ng-deep .p-button {
-      background: #e91e63;
-      border-color: #e91e63;
-      color: white;
       font-weight: 600;
       border-radius: 24px;
       padding: 0.75rem 1.5rem;
