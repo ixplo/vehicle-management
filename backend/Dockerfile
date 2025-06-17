@@ -10,4 +10,4 @@ FROM eclipse-temurin:21-jdk-alpine
 WORKDIR /app
 COPY --from=builder app/target/vehicle-management-*.jar app.jar
 RUN chmod +x app.jar
-ENTRYPOINT ["java","-jar","app.jar"]
+ENTRYPOINT ["java","-Dspring.profiles.active=test","-jar","app.jar"]
