@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm run build -- --configuration production --output-path dist/marketplace-ng/browser
+RUN npm run build -- --configuration production --output-path dist/marketplace-ng
 
 # stage 2: serve
 FROM nginx:alpine
