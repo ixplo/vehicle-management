@@ -1,5 +1,7 @@
 ### auth
-POST http://localhost:8080/api/v1/auth/login
+#@hostname = https://vehicle-management.fly.dev/
+@hostname = http://localhost:8080
+POST {{hostname}}/api/v1/auth/login
 Content-Type: application/json
 
 {
@@ -14,7 +16,7 @@ GET http://localhost:4566/test-bucket/
 Authorization: AWS4-HMAC-SHA256 Credential=test-access-key/test_secret
 
 ### create vehicle
-POST http://localhost:8080/api/v1/vehicles
+POST {{hostname}}/api/v1/vehicles
 Content-Type: application/json
 
 {
@@ -49,6 +51,7 @@ Content-Type: application/json
 
 ### get vehicle
 @vehicleId = 8e915888-7656-4bcb-9d21-af8f1753cb54
-GET http://localhost:8080/api/v1/vehicles/{{vehicleId}}
-#Authorization: Bearer {{token}}
+GET {{hostname}}/api/v1/vehicles/{{vehicleId}}
+
 ###
+GET {{hostname}}/api/v1/vehicles?type=SUV
