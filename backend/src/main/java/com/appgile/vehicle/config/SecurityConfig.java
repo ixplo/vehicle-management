@@ -1,6 +1,9 @@
 package com.appgile.vehicle.config;
 
 import com.appgile.vehicle.security.JwtAuthenticationFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.web.filter.CorsFilter;
+import org.springframework.core.Ordered;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -79,7 +82,7 @@ public class SecurityConfig {
     @Primary
     @Bean
     public SecurityFilterChain filterChainTest(HttpSecurity http, DaoAuthenticationProvider authenticationProvider) throws Exception {
-        http.cors(Customizer.withDefaults())
+        http.cors(AbstractHttpConfigurer::disable)
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/api/v1/auth/**").permitAll()
@@ -102,5 +105,21 @@ public class SecurityConfig {
                 .roles("USER")
                 .build();
         return new InMemoryUserDetailsManager(u);
+    }
+
+    @Bean
+    @Primary
+    @Profile("test")
+    public FilterRegistrationBean<CorsFilter> corsFilterRegistration() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOriginPattern("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", config);
+        FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
+        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        return bean;
     }
 }
