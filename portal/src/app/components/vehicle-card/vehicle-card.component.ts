@@ -22,6 +22,7 @@ export class VehicleCardComponent {
      * Get the main image URL from vehicle photos
      */
     getMainImage(): string {
+
         if (this.vehicle.photos && this.vehicle.photos.length > 0) {
             // Sort by ordering and get the first photo
             const sortedPhotos = this.vehicle.photos.sort((a, b) => a.ordering - b.ordering);
@@ -44,7 +45,7 @@ export class VehicleCardComponent {
     formatPrice(price: number): string {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
-            currency: 'USD',
+            currency: 'EUR',
             minimumFractionDigits: 0,
             maximumFractionDigits: 0
         }).format(price);
@@ -161,6 +162,7 @@ export class VehicleCardComponent {
         switch (ecoLabel.toUpperCase()) {
             case 'ECO':
                 return 'assets/icons/classeco.svg';
+            case 'A':
             case 'O':
                 return 'assets/icons/classo.svg';
             case 'B':
@@ -170,6 +172,13 @@ export class VehicleCardComponent {
             default:
                 return 'assets/icons/classeco.svg'; // Default fallback
         }
+    }
+
+    /**
+     * Get vehicle title, using derivative if available, otherwise type
+     */
+    getVehicleTitle(): string {
+        return this.vehicle.derivative || this.vehicle.type;
     }
 
 }
