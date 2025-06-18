@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm run build:prod
+RUN npm run build -- --configuration production --output-path dist/portal
 
 # stage 2: serve
 FROM nginx:alpine
