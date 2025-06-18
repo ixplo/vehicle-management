@@ -1,6 +1,6 @@
 export interface Photo {
     photoId: string;
-    vehicle: string;
+    vehicle?: string;
     photoUrl: string;
     ordering: number;
     description: string;
@@ -10,14 +10,14 @@ export interface Vehicle {
     vehicleId: string;
     type: string;
     useOfVehicle: string;
-    derivative: string;
+    derivative?: string;
     registrationDate: string;
     kilometers: number;
     description: string;
     ecoLabel: string;
     numberOfDoors: number;
     transmissionType: string;
-    fuelIcon: string;
+    fuelType: string;
     visitCounter: number;
     dealerLink: string;
     year: number;

@@ -3,7 +3,7 @@
     <div class="card-image-container">
         <img 
             [src]="getMainImage()" 
-            [alt]="vehicle.derivative" 
+            [alt]="getVehicleTitle()" 
             class="vehicle-image"
             (error)="onImageError($event)"
             loading="lazy" />
@@ -20,7 +20,7 @@
         <!-- Vehicle Title and Use -->
         <div class="vehicle-header flex flex-row justify-between">
             <div class="vehicle-title-container">
-            <h3 class="vehicle-title">{{ vehicle.derivative }}</h3>
+            <h3 class="vehicle-title">{{ getVehicleTitle() }}</h3>
             <!-- <span class="vehicle-use">{{ vehicle.useOfVehicle }}</span> -->
         </div>
         <div class="vehicle-price">{{ formatPrice(vehicle.price) }}</div>
@@ -54,8 +54,8 @@
                 [text]="vehicle.transmissionType">
             </app-label>
             <app-label 
-                [icon]="getFuelIcon(vehicle.fuelIcon)"
-                [text]="capitalizeFirst(vehicle.fuelIcon)">
+                [icon]="getFuelIcon(vehicle.fuelType)"
+                [text]="capitalizeFirst(vehicle.fuelType)">
             </app-label>
             <app-label 
                 [icon]="'assets/icons/eye.svg'"
