@@ -5,7 +5,10 @@ import com.appgile.vehicle.model.Vehicle;
 import com.appgile.vehicle.repository.VehicleRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.OffsetDateTime;
@@ -16,10 +19,10 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class VehicleService {
-    
+
     private final VehicleRepository vehicleRepository;
     private final StorageService storageService;
-    
+
     public VehicleService(VehicleRepository vehicleRepository,
                           StorageService storageService) {
         this.vehicleRepository = vehicleRepository;
@@ -45,7 +48,20 @@ public class VehicleService {
     }
 
     public List<Vehicle> list(String useOfVehicle, String type) {
-        return vehicleRepository.findByUseOfVehicleAndType(useOfVehicle, type);
+        // convert blank strings to null so that ExampleMatcher ignores them
+        String use = StringUtils.hasText(useOfVehicle) ? useOfVehicle : null;
+        String typ = StringUtils.hasText(type) ? type : null;
+
+        Vehicle probe = new Vehicle();
+        probe.setUseOfVehicle(use);
+        probe.setType(typ);
+
+        ExampleMatcher matcher = ExampleMatcher.matchingAll()
+                .withIgnoreNullValues()
+                .withIgnorePaths("createdAt", "createdBy", "updatedAt");
+
+        Example<Vehicle> example = Example.of(probe, matcher);
+        return vehicleRepository.findAll(example);
     }
 
     public Vehicle update(UUID id, Vehicle vehicle) {
@@ -71,7 +87,7 @@ public class VehicleService {
     public String saveVehiclePhoto(UUID vehicleId, MultipartFile file) {
         String photoUrl = storageService.publishPhoto(file);
         log.debug("Photo published to url: {}", photoUrl);
-        
+
         Vehicle vehicle = vehicleRepository.findById(vehicleId)
                 .orElseThrow(() -> new IllegalArgumentException("Vehicle not found"));
 
