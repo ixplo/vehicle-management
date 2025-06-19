@@ -115,6 +115,7 @@ export class EditVehicleComponent implements OnInit {
       transmissionType: ['', Validators.required],
       fuelType: ['', Validators.required],
       dealerLink: [''],
+      visitCounter: [''],
       year: [new Date().getFullYear(), [Validators.required, Validators.min(1990), Validators.max(new Date().getFullYear() + 1)]],
       price: [0, [Validators.required, Validators.min(0)]],
       supplierWebsiteUrl: [''],
@@ -213,9 +214,6 @@ export class EditVehicleComponent implements OnInit {
           summary: 'Success',
           detail: 'Vehicle updated successfully!'
         });
-        setTimeout(() => {
-          this.router.navigate(['/']);
-        }, 2000);
       },
       error: (error) => {
         this.loading = false;
@@ -240,6 +238,10 @@ export class EditVehicleComponent implements OnInit {
 
   onCancel(): void {
     this.router.navigate(['/']);
+  }
+
+  goBack(): void {
+    this.router.navigate([''])
   }
 
   isFieldInvalid(fieldName: string): boolean {

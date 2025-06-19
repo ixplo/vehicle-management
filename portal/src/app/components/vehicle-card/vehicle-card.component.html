@@ -7,12 +7,7 @@
             class="vehicle-image"
             (error)="onImageError($event)"
             loading="lazy" />
-        <div class="vehicle-type-badge">
-            <span class="type-label">{{ vehicle.type }}</span>
-        </div>
-        <div class="year-badge">
-            <span>{{ vehicle.year }}</span>
-        </div>
+   
         <div class="edit-button-container">
             <p-button 
                 icon="pi pi-pencil" 
@@ -65,14 +60,11 @@
                 [text]="vehicle.transmissionType">
             </app-label>
             <app-label 
-                [icon]="getEcoLabelIcon(vehicle.ecoLabel)"
-                [text]="'Eco: ' + vehicle.ecoLabel">
-            </app-label>
-            <app-label 
                 [icon]="'assets/icons/eye.svg'"
                 class="text-lg"
                 [text]="formatViews(vehicle.visitCounter) + ' views'">
             </app-label>
+            <img [src]="getEcoLabelIcon(vehicle.ecoLabel)">
         </div>
 
         <!-- Rating and Views -->

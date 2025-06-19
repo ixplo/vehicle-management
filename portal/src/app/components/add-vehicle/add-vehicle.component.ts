@@ -172,9 +172,6 @@ export class AddVehicleComponent implements OnInit {
             summary: 'Success',
             detail: 'Vehicle added successfully!'
           });
-          setTimeout(() => {
-            this.router.navigate(['/']);
-          }, 2000);
         },
         error: (error: any) => {
           this.loading = false;
