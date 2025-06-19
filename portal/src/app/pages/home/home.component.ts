@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
 import { VehicleService } from '../../services/vehicle.service';
 import { Vehicle } from '../../interfaces/vehicle/vehicle';
 import { VehicleCardComponent } from '../../components/vehicle-card/vehicle-card.component';
 
 @Component({
     selector: 'app-home',
-    imports: [CommonModule, VehicleCardComponent],
+    imports: [CommonModule, RouterLink, ButtonModule, VehicleCardComponent],
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss'
 })

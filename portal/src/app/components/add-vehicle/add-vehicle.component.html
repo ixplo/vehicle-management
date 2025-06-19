@@ -1,0 +1,336 @@
+<div class="add-vehicle-container">
+  <p-toast></p-toast>
+  
+  <div class="header-section">
+    <h1 class="page-title">Add New Vehicle</h1>
+    <p class="page-subtitle">Fill in the details to add a new vehicle to the marketplace</p>
+  </div>
+
+  <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()" class="vehicle-form">
+    <p-card>
+      <div class="form-grid">
+        
+        <!-- Basic Information Section -->
+        <div class="section">
+          <h3 class="section-title">Basic Information</h3>
+          <p-divider></p-divider>
+          
+          <div class="form-row">
+            <div class="form-field">
+              <label for="type">Vehicle Name *</label>
+              <input 
+                pInputText 
+                id="type"
+                formControlName="type" 
+                placeholder="Enter vehicle name (e.g., Audi A4, BMW X5)"
+                [class]="{'ng-invalid ng-dirty': isFieldInvalid('type')}">
+              <small class="error-message" *ngIf="isFieldInvalid('type')">
+                {{ getFieldError('type') }}
+              </small>
+            </div>
+
+            <div class="form-field">
+              <label for="useOfVehicle">Use of Vehicle *</label>
+              <p-dropdown 
+                id="useOfVehicle"
+                formControlName="useOfVehicle" 
+                [options]="useOfVehicleOptions" 
+                placeholder="Select usage type"
+                [class]="{'ng-invalid ng-dirty': isFieldInvalid('useOfVehicle')}">
+              </p-dropdown>
+              <small class="error-message" *ngIf="isFieldInvalid('useOfVehicle')">
+                {{ getFieldError('useOfVehicle') }}
+              </small>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="year">Year *</label>
+              <p-inputNumber 
+                id="year"
+                formControlName="year" 
+                mode="decimal" 
+                [useGrouping]="false"
+                placeholder="Enter year"
+                [class]="{'ng-invalid ng-dirty': isFieldInvalid('year')}">
+              </p-inputNumber>
+              <small class="error-message" *ngIf="isFieldInvalid('year')">
+                {{ getFieldError('year') }}
+              </small>
+            </div>
+
+            <div class="form-field">
+              <label for="registrationDate">Registration Date *</label>
+              <p-calendar 
+                id="registrationDate"
+                formControlName="registrationDate" 
+                dateFormat="yy-mm-dd"
+                placeholder="Select registration date"
+                [class]="{'ng-invalid ng-dirty': isFieldInvalid('registrationDate')}">
+              </p-calendar>
+              <small class="error-message" *ngIf="isFieldInvalid('registrationDate')">
+                {{ getFieldError('registrationDate') }}
+              </small>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="price">Price (EUR) *</label>
+              <p-inputNumber 
+                id="price"
+                formControlName="price" 
+                mode="currency" 
+                currency="EUR" 
+                locale="en-US"
+                placeholder="Enter price"
+                [class]="{'ng-invalid ng-dirty': isFieldInvalid('price')}">
+              </p-inputNumber>
+              <small class="error-message" *ngIf="isFieldInvalid('price')">
+                {{ getFieldError('price') }}
+              </small>
+            </div>
+
+            <div class="form-field">
+              <label for="kilometers">Kilometers *</label>
+              <p-inputNumber 
+                id="kilometers"
+                formControlName="kilometers" 
+                mode="decimal" 
+                suffix=" km"
+                placeholder="Enter kilometers"
+                [class]="{'ng-invalid ng-dirty': isFieldInvalid('kilometers')}">
+              </p-inputNumber>
+              <small class="error-message" *ngIf="isFieldInvalid('kilometers')">
+                {{ getFieldError('kilometers') }}
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Technical Specifications Section -->
+        <div class="section">
+          <h3 class="section-title">Technical Specifications</h3>
+          <p-divider></p-divider>
+          
+          <div class="form-row">
+            <div class="form-field">
+              <label for="fuelType">Fuel Type *</label>
+              <p-dropdown 
+                id="fuelType"
+                formControlName="fuelType" 
+                [options]="fuelTypes" 
+                placeholder="Select fuel type"
+                [class]="{'ng-invalid ng-dirty': isFieldInvalid('fuelType')}">
+              </p-dropdown>
+              <small class="error-message" *ngIf="isFieldInvalid('fuelType')">
+                {{ getFieldError('fuelType') }}
+              </small>
+            </div>
+
+            <div class="form-field">
+              <label for="transmissionType">Transmission Type *</label>
+              <p-dropdown 
+                id="transmissionType"
+                formControlName="transmissionType" 
+                [options]="transmissionTypes" 
+                placeholder="Select transmission type"
+                [class]="{'ng-invalid ng-dirty': isFieldInvalid('transmissionType')}">
+              </p-dropdown>
+              <small class="error-message" *ngIf="isFieldInvalid('transmissionType')">
+                {{ getFieldError('transmissionType') }}
+              </small>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="numberOfDoors">Number of Doors *</label>
+              <p-dropdown 
+                id="numberOfDoors"
+                formControlName="numberOfDoors" 
+                [options]="doorOptions" 
+                placeholder="Select number of doors"
+                [class]="{'ng-invalid ng-dirty': isFieldInvalid('numberOfDoors')}">
+              </p-dropdown>
+              <small class="error-message" *ngIf="isFieldInvalid('numberOfDoors')">
+                {{ getFieldError('numberOfDoors') }}
+              </small>
+            </div>
+
+            <div class="form-field">
+              <label for="ecoLabel">Eco Label *</label>
+              <p-dropdown 
+                id="ecoLabel"
+                formControlName="ecoLabel" 
+                [options]="ecoLabels" 
+                placeholder="Select eco label"
+                [class]="{'ng-invalid ng-dirty': isFieldInvalid('ecoLabel')}">
+              </p-dropdown>
+              <small class="error-message" *ngIf="isFieldInvalid('ecoLabel')">
+                {{ getFieldError('ecoLabel') }}
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Description Section -->
+        <div class="section">
+          <h3 class="section-title">Description & Details</h3>
+          <p-divider></p-divider>
+          
+          <div class="form-field full-width">
+            <label for="description">Description *</label>
+            <textarea 
+              pInputTextarea 
+              id="description"
+              formControlName="description" 
+              rows="4" 
+              placeholder="Enter vehicle description"
+              [class]="{'ng-invalid ng-dirty': isFieldInvalid('description')}">
+            </textarea>
+            <small class="error-message" *ngIf="isFieldInvalid('description')">
+              {{ getFieldError('description') }}
+            </small>
+          </div>
+        </div>
+
+        <!-- Additional Information Section -->
+        <div class="section">
+          <h3 class="section-title">Additional Information</h3>
+          <p-divider></p-divider>
+          
+          <div class="form-row">
+            <div class="form-field">
+              <label for="dealerLink">Dealer Link</label>
+              <input 
+                pInputText 
+                id="dealerLink"
+                formControlName="dealerLink" 
+                placeholder="Enter dealer link">
+            </div>
+
+            <div class="form-field">
+              <label for="supplierWebsiteUrl">Supplier Website URL</label>
+              <input 
+                pInputText 
+                id="supplierWebsiteUrl"
+                formControlName="supplierWebsiteUrl" 
+                placeholder="Enter supplier website URL">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="supplierInternalCode">Supplier Internal Code</label>
+              <input 
+                pInputText 
+                id="supplierInternalCode"
+                formControlName="supplierInternalCode" 
+                placeholder="Enter supplier internal code">
+            </div>
+
+            <div class="form-field">
+              <div class="checkbox-field">
+                <p-checkbox 
+                  formControlName="isActive" 
+                  [binary]="true" 
+                  inputId="isActive">
+                </p-checkbox>
+                <label for="isActive">Vehicle is active</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Photos Section -->
+        <div class="section">
+          <h3 class="section-title">Photos</h3>
+          <p-divider></p-divider>
+          
+          <div formArrayName="photos">
+            <div 
+              *ngFor="let photoControl of photosFormArray.controls; let i = index" 
+              [formGroupName]="i" 
+              class="photo-group">
+              
+              <div class="photo-header">
+                <h4>Photo {{ i + 1 }}</h4>
+                <p-button 
+                  *ngIf="photosFormArray.length > 1"
+                  (onClick)="removePhotoField(i)" 
+                  icon="pi pi-trash" 
+                  severity="danger" 
+                  [outlined]="true" 
+                  size="small">
+                </p-button>
+              </div>
+
+              <div class="form-row">
+                <div class="form-field">
+                  <label [for]="'photoUrl' + i">Photo URL *</label>
+                  <input 
+                    pInputText 
+                    [id]="'photoUrl' + i"
+                    formControlName="photoUrl" 
+                    placeholder="Enter photo URL">
+                  <small class="error-message" *ngIf="photoControl.get('photoUrl')?.invalid && photoControl.get('photoUrl')?.touched">
+                    Photo URL is required and must be a valid URL
+                  </small>
+                </div>
+
+                <div class="form-field">
+                  <label [for]="'ordering' + i">Ordering *</label>
+                  <p-inputNumber 
+                    [id]="'ordering' + i"
+                    formControlName="ordering" 
+                    mode="decimal" 
+                    [useGrouping]="false"
+                    placeholder="Enter order number">
+                  </p-inputNumber>
+                </div>
+              </div>
+
+              <div class="form-field full-width">
+                <label [for]="'photoDescription' + i">Photo Description</label>
+                <input 
+                  pInputText 
+                  [id]="'photoDescription' + i"
+                  formControlName="description" 
+                  placeholder="Enter photo description">
+              </div>
+            </div>
+          </div>
+
+          <p-button 
+            (onClick)="addPhotoField()" 
+            label="Add Photo" 
+            icon="pi pi-plus" 
+            severity="secondary" 
+            [outlined]="true" 
+            class="add-photo-btn">
+          </p-button>
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <p-button 
+          (onClick)="onCancel()" 
+          label="Cancel" 
+          severity="secondary" 
+          [outlined]="true" 
+          [disabled]="loading">
+        </p-button>
+        
+        <p-button 
+          type="submit" 
+          label="Add Vehicle" 
+          [loading]="loading" 
+          [disabled]="!vehicleForm.valid">
+        </p-button>
+      </div>
+    </p-card>
+  </form>
+</div>

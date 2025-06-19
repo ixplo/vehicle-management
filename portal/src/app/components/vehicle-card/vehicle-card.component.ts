@@ -5,7 +5,7 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { BadgeModule } from 'primeng/badge';
 import { Vehicle } from '../../interfaces/vehicle/vehicle';
-import { LabelComponent } from './label/label.component';
+import { LabelComponent } from '../label/label.component';
 
 @Component({
     selector: 'app-vehicle-card',

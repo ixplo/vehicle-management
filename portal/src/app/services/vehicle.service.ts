@@ -13,10 +13,7 @@ export class VehicleService {
     constructor(private http: HttpClient) {}
 
     getVehicles(): Observable<Vehicle[]> {
-        const params = new HttpParams()
-            .set('useOfVehicle', 'Private')
-            .set('type', 'SUV');
-        return this.http.get<Vehicle[]>(`${this.apiUrl}/v1/vehicles`, { params });
+        return this.http.get<Vehicle[]>(`${this.apiUrl}/v1/vehicles`);
     }
 
     getVehicleById(id: string): Observable<Vehicle> {
@@ -31,5 +28,13 @@ export class VehicleService {
         
         // Uncomment below line when backend is working
         return this.http.get<Vehicle>(`${this.apiUrl}/v1/vehicles/${id}`);
+    }
+
+    addVehicle(vehicle: Partial<Vehicle>): Observable<Vehicle> {
+        return this.http.post<Vehicle>(`${this.apiUrl}/v1/vehicles`, vehicle);
+    }
+
+    updateVehicle(id: string, vehicle: Partial<Vehicle>): Observable<Vehicle> {
+        return this.http.put<Vehicle>(`${this.apiUrl}/v1/vehicles/${id}`, vehicle);
     }
 }

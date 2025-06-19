@@ -4,6 +4,17 @@
         <p class="page-subtitle">Discover your perfect vehicle from our curated collection</p>
     </div> -->
 
+    <!-- Add Vehicle Button -->
+    <div class="header-actions">
+        <p-button 
+            label="Add Vehicle" 
+            icon="pi pi-plus" 
+            routerLink="/add-vehicle"
+            severity="success"
+            class="add-vehicle-btn">
+        </p-button>
+    </div>
+
     <div class="loading-container" *ngIf="loading">
         <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
         <p>Loading vehicles...</p>

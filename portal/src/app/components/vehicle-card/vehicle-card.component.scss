@@ -15,8 +15,15 @@
 
 .card-image-container {
   position: relative;
-  height: 200px;
+  border-radius: 12px 12px 0 0;
   overflow: hidden;
+  
+  .edit-button-container {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 20;
+  }
   
   .vehicle-image {
     width: 100%;

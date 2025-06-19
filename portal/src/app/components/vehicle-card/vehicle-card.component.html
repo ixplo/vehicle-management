@@ -13,6 +13,13 @@
         <div class="year-badge">
             <span>{{ vehicle.year }}</span>
         </div>
+        <div class="edit-button-container">
+            <p-button 
+                icon="pi pi-pencil" 
+                styleClass="p-button-rounded p-button-secondary p-button-text"
+                [routerLink]="['/edit-vehicle', vehicle.vehicleId]">
+            </p-button>
+        </div>
     </div>
 
     <!-- Card Content -->
@@ -50,25 +57,22 @@
             [text]="vehicle.numberOfDoors + ' doors'">
         </app-label>
             <app-label 
+                [icon]="getFuelIcon(vehicle.fuelType)"
+                [text]="capitalizeFirst(vehicle.fuelType)">
+            </app-label>
+            <app-label 
                 [icon]="'assets/icons/cogs.svg'"
                 [text]="vehicle.transmissionType">
             </app-label>
             <app-label 
-                [icon]="getFuelIcon(vehicle.fuelType)"
-                [text]="capitalizeFirst(vehicle.fuelType)">
+                [icon]="getEcoLabelIcon(vehicle.ecoLabel)"
+                [text]="'Eco: ' + vehicle.ecoLabel">
             </app-label>
             <app-label 
                 [icon]="'assets/icons/eye.svg'"
                 class="text-lg"
                 [text]="formatViews(vehicle.visitCounter) + ' views'">
             </app-label>
-            <div class="eco-badge">
-                <img 
-                    [src]="getEcoLabelIcon(vehicle.ecoLabel)" 
-                    [alt]="'Eco class ' + vehicle.ecoLabel"
-                    class="eco-icon"
-                    loading="lazy">
-            </div>
         </div>
 
         <!-- Rating and Views -->
